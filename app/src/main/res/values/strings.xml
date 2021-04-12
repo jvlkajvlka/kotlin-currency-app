@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">JuliaIgnacyk_czw_800</string>
+    <string name="todayRateText">Dzisiejszy kurs: %1$f</string>
+    <string name="yesterdayRateText">Wczorajszy kurs: %1$f</string>
+    <string name="string_yesterdayratetext">Wczorajszy kurs: %1$f</string>
+    <string name="currencyText">Kursy walut</string>
+    <string name="goldText">Kurs złota</string>
+    <string name="todayGoldRate">"Dzisiejszy kurs złota: %1$f "</string>
+    <string name="goldRateText">Dzisiejszy kurs zlota: %1$f</string>
+    <string name="siema">siema</string>
+    <string name="buttonGold">GOld do chuja</string>
+    <string name="wartosc_pln">Wartość PLN:</string>
+    <string name="pln">PLN</string>
+    <string name="calculateFromPLN">OBLICZ</string>
+    <string name="valfromPLNtext">0</string>
+    <string name="plnFromInput">0</string>
+    <string name="toPLNtext">0</string>
+    <string name="oblicz">OBLICZ</string>
+    <string name="converterFromPLN">Wymień polskie pieniądze</string>
+    <string name="converterToPLN">Wymień na polskie pieniądze</string>
+</resources>
