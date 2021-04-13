@@ -25,7 +25,7 @@ class CurrencyActivity : AppCompatActivity() {
 
         currienciesListRecyclerView = findViewById(R.id.currienciesListRecyclerView)
         currienciesListRecyclerView.layoutManager = LinearLayoutManager(this)
-        val tmpData : MutableList<CurrencyDetails> = mutableListOf(CurrencyDetails(applicationContext,"EUR",4.56), CurrencyDetails(applicationContext,"CHF",3.95))
+        val tmpData : MutableList<CurrencyDetails> = mutableListOf<CurrencyDetails>()
         currienciesListAdapter = CurrenciesListAdapter(tmpData,this)
         currienciesListRecyclerView.adapter = currienciesListAdapter
         DataProvider.prepare(this)
@@ -35,13 +35,11 @@ class CurrencyActivity : AppCompatActivity() {
     fun mainRequest() {
         val urlTableA = "https://api.nbp.pl/api/exchangerates/tables/A?format=json"
 
-
         val currancyRatesRequestTableA = JsonArrayRequest(
                 Request.Method.GET, urlTableA, null,
                 Response.Listener { response ->
                     print("SUCCESS")
                     loadDataFromA(response)
-                    currienciesListAdapter.dataSet = dataSet
                     currienciesListAdapter.notifyDataSetChanged()
                     makeRequestForTableB()
                 },
@@ -75,12 +73,11 @@ class CurrencyActivity : AppCompatActivity() {
             val ratesCount = rates.length()
             val tmpData : MutableList<CurrencyDetails> = mutableListOf<CurrencyDetails>()
 
-
             for (i in 0 until ratesCount){
                 val currencyCode = rates.getJSONObject(i).getString("code")
                 val currencyRate = rates.getJSONObject(i).getDouble("mid")
                 val flagID = DataProvider.getFlagForCurrency(currencyCode)
-                val currencyObject = CurrencyDetails(applicationContext,currencyCode,currencyRate,flagID)
+                val currencyObject = CurrencyDetails(applicationContext,currencyCode,currencyRate,flagID,"A")
                 tmpData.add(currencyObject)
             }
             this.dataSet = tmpData
@@ -93,12 +90,11 @@ class CurrencyActivity : AppCompatActivity() {
             val ratesCount = rates.length()
             val tmpData : MutableList<CurrencyDetails> = mutableListOf<CurrencyDetails>()
 
-
             for (i in 0 until ratesCount){
                 val currencyCode = rates.getJSONObject(i).getString("code")
                 val currencyRate = rates.getJSONObject(i).getDouble("mid")
                 val flagID = DataProvider.getFlagForCurrency(currencyCode)
-                val currencyObject = CurrencyDetails(applicationContext,currencyCode,currencyRate,flagID)
+                val currencyObject = CurrencyDetails(applicationContext,currencyCode,currencyRate,flagID,"B")
                 tmpData.add(currencyObject)
             }
             this.dataSet.addAll(tmpData)
@@ -108,9 +104,9 @@ class CurrencyActivity : AppCompatActivity() {
     private fun handleNetworkError(error: VolleyError) {
         println("ERROR")
         println(error.networkResponse.statusCode.toString())
-        if (error is TimeoutError){
-            currienciesListAdapter.dataSet.clear()
-            mainRequest()
-        }
+//        if (error is TimeoutError){
+//            currienciesListAdapter.dataSet.clear()
+//            mainRequest()
+//        }
     }
 }

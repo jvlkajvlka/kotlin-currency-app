@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.widget.TextView
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.TimeoutError
+import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
@@ -41,28 +43,35 @@ class HistoricRatesActivity : AppCompatActivity() {
 
     fun getHistoricRates(url_1: String, url_2: String){
         val queueLast7Days = DataProvider.queue
-        val queueLast30Days = DataProvider.queue
         val urlLast7Days = url_1.format(currencyCode)
-        val urlLast30Days = url_2.format(currencyCode)
-
         val historicRatesRequestLast7Days = JsonObjectRequest(
             Request.Method.GET, urlLast7Days, null,
             Response.Listener { response ->
                 println("Success - 7 days history ")
                 loadDataLast7Days(response)
                 showDataLast7Days()
-            }, Response.ErrorListener { "ERROR" }
-        )
-
-        val historicRatesRequestLast30Days = JsonObjectRequest(
-            Request.Method.GET, urlLast30Days, null,
-            Response.Listener { response ->
-                println("Success - 30 days history ")
-                loadDataLast30Days(response)
-                showDataLast30Days()
-            }, Response.ErrorListener { "ERROR" }
-        )
+                getHistoricRates(url_2)
+            },  Response.ErrorListener { error ->
+            println(error)
+            handleNetworkError(error)
+        })
         queueLast7Days.add(historicRatesRequestLast7Days)
+
+    }
+
+    private fun getHistoricRates(url_2: String){
+        val queueLast30Days = DataProvider.queue
+        val urlLast30Days = url_2.format(currencyCode)
+        val historicRatesRequestLast30Days = JsonObjectRequest(
+                Request.Method.GET, urlLast30Days, null,
+                Response.Listener { response ->
+                    println("Success - 30 days history ")
+                    loadDataLast30Days(response)
+                    showDataLast30Days()
+                }, Response.ErrorListener { error ->
+            println(error)
+            handleNetworkError(error)
+        })
         queueLast30Days.add(historicRatesRequestLast30Days)
     }
 
@@ -124,5 +133,10 @@ class HistoricRatesActivity : AppCompatActivity() {
             }
             this.dataLast30Days = tmpData as Array<Pair<String,Double>>
         }
+    }
+    private fun handleNetworkError(error: VolleyError) {
+        println("ERROR")
+        println(error.networkResponse.statusCode.toString())
+
     }
 }
