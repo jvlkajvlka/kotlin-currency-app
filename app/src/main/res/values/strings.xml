@@ -7,8 +7,6 @@
     <string name="goldText">Kurs złota</string>
     <string name="todayGoldRate">"Dzisiejszy kurs złota: %1$f "</string>
     <string name="goldRateText">Dzisiejszy kurs zlota: %1$f</string>
-    <string name="siema">siema</string>
-    <string name="buttonGold">GOld do chuja</string>
     <string name="wartosc_pln">Wartość PLN:</string>
     <string name="pln">PLN</string>
     <string name="calculateFromPLN">OBLICZ</string>

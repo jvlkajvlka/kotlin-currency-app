@@ -1,5 +1,6 @@
 package com.example.juliaignacyk_czw_800
-
+// Julia Ignacyk: 303111
+// WYkonałam wszytskie punkty
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

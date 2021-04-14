@@ -42,9 +42,7 @@ data class CurrencyDetails(val context: Context, var currencyCode: String, var r
             )
             queue.add(pastRatesRequest)
         }
-
     }
-
 
     private fun loadData(response: JSONObject?) {
         response?.let {
